@@ -5,6 +5,8 @@ import Router from 'react-routing/src/Router';
 import http from './core/HttpClient';
 import App from './components/App';
 import ContentPage from './components/ContentPage';
+import AdminPage from './components/AdminPage';
+import CarouselPage from './components/CarouselPage';
 import ContactPage from './components/ContactPage';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
@@ -21,11 +23,16 @@ const router = new Router(on => {
 
   on('/login', async () => <LoginPage />);
 
+  on('/admin', async () => {
+    const images = await http.get(`/api/images`);
+    return images && <AdminPage images={images} />
+  });
+
   on('/register', async () => <RegisterPage />);
 
   on('*', async (state) => {
-    const content = await http.get(`/api/content?path=${state.path}`);
-    return content && <ContentPage {...content} />;
+    const images = await http.get(`/api/images/${state.path}`);
+    return images && <CarouselPage images={images} />;
   });
 
   on('error', (state, error) => state.statusCode === 404 ?
