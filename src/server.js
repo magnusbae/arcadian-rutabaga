@@ -3,6 +3,7 @@
 import 'babel-core/polyfill';
 import path from 'path';
 import express from 'express';
+import bodyParser from 'body-parser';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import Router from './routes';
@@ -15,6 +16,8 @@ import pg from './utils/pgConnector';
 const server = global.server = express();
 
 server.set('port', (process.env.PORT || 5000));
+
+server.use(bodyParser.json({limit: '3mb'}));
 server.use(express.static(path.join(__dirname, 'public')));
 
 //
