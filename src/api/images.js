@@ -50,4 +50,15 @@ router.get('/:id', function (request, response) {
     });
 });
 
+router.delete('/:id', function(request, response){
+  db
+    .query("delete from images where id = $1", request.params.id)
+    .then(function(){
+      response.sendStatus(200);
+    })
+    .then(function(err){
+      response.status(404).send(err);
+    });
+});
+
 export default router;
