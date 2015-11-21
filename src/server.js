@@ -8,6 +8,10 @@ import ReactDOM from 'react-dom/server';
 import Router from './routes';
 import Html from './components/Html';
 
+
+import pg from './utils/pgConnector';
+
+
 const server = global.server = express();
 
 server.set('port', (process.env.PORT || 5000));
